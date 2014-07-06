@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:timeout_notification="http://www.csapi.org/wsdl/timeoutnotification/data/v1_0/interface" xmlns:timeout_notification_xsd="http://api-v1.gen.mm.vodafone.com/mminterface/result" xmlns:timeout_notification_local="http://www.csapi.org/schema/timeoutnotification/data/v1_0/local" name="timeout_notification_interface" targetNamespace="http://www.csapi.org/wsdl/timeoutnotification/data/v1_0/interface">
+	<wsdl:types>
+		<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.csapi.org/schema/timeoutnotification/data/v1_0/local">
+			<xsd:import namespace="http://api-v1.gen.mm.vodafone.com/mminterface/result" schemaLocation="CPSInterface_Result.xsd"/>
+			<xsd:element name="notifyQueueTimeout" type="timeout_notification_local:notifyQueueTimeout"/>
+			<xsd:complexType name="notifyQueueTimeout">
+				<xsd:sequence>
+					<xsd:element name="originatorConversationID" type="xsd:string"/>
+					<xsd:element name="originReqeust" type="xsd:string"/>					
+					<xsd:element name="extensionInfo" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="item" type="timeout_notification_xsd:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="notifyQueueTimeoutResponse" type="timeout_notification_local:notifyQueueTimeoutResponse"/>
+			<xsd:complexType name="notifyQueueTimeoutResponse">
+				<xsd:sequence>
+					<xsd:element name="result" type="timeout_notification_xsd:Result"/>
+					<xsd:element name="extensionInfo" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="item" type="timeout_notification_xsd:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>					
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="QueueTimeoutNotification_notifyQueueTimeoutRequest">
+		<wsdl:part name="parameters" element="timeout_notification_local:notifyQueueTimeout"/>
+	</wsdl:message>
+	<wsdl:message name="QueueTimeoutNotification_notifyQueueTimeoutResponse">
+		<wsdl:part name="result" element="timeout_notification_local:notifyQueueTimeoutResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="QueueTimeoutNotificationPort">
+		<wsdl:operation name="notifyQueueTimeout">
+			<wsdl:input message="timeout_notification:QueueTimeoutNotification_notifyQueueTimeoutRequest"/>
+			<wsdl:output message="timeout_notification:QueueTimeoutNotification_notifyQueueTimeoutResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="QueueTimeoutNotificationBinding" type="timeout_notification:QueueTimeoutNotificationPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="notifyQueueTimeout">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="QueueTimeoutNotificationService">
+		<wsdl:port name="queueTimeoutNotification" binding="timeout_notification:QueueTimeoutNotificationBinding">
+			<soap:address location="http://localhost:9080/queueTimeoutNotificationService/services/queueTimeoutNotification"/>
+		</wsdl:port>
+	</wsdl:service>	
+</wsdl:definitions>

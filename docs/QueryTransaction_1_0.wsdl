@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:head_xsd="http://www.huawei.com.cn/schema/common/v2_1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:result="http://api-v1.gen.mm.vodafone.com/mminterface/result" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:query_trans="http://www.csapi.org/wsdl/transaction/data/v1_0/interface" xmlns:query_trans_xsd="http://api-v1.gen.mm.vodafone.com/mminterface/response" xmlns:query_trans_local="http://www.csapi.org/schema/transaction/data/v1_0/local" name="query_trans_interface" targetNamespace="http://www.csapi.org/wsdl/transaction/data/v1_0/interface">
+	<wsdl:types>
+		<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.csapi.org/schema/transaction/data/v1_0/local">
+			<xsd:import namespace="http://api-v1.gen.mm.vodafone.com/mminterface/response" schemaLocation="CPSInterface_Response.xsd"/>
+			<xsd:import namespace="http://api-v1.gen.mm.vodafone.com/mminterface/result" schemaLocation="CPSInterface_Result.xsd"/>
+			<xsd:import namespace="http://www.huawei.com.cn/schema/common/v2_1" schemaLocation="parlayx_common_head_types_2_1.xsd"/>
+			<xsd:element name="queryTranscation" type="query_trans_local:queryTranscation"/>
+			<xsd:complexType name="queryTranscation">
+				<xsd:sequence>
+					<xsd:element name="originatorConversationID" type="xsd:string"/>								
+					<xsd:element name="extensionInfo" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="item" type="result:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:element name="queryTranscationResponse" type="query_trans_local:queryTranscationResponse"/>			
+			<xsd:complexType name="queryTranscationResponse">
+				<xsd:sequence>
+					<xsd:element name="result" type="query_trans_xsd:Response"/>
+					<xsd:element name="submitApiRequestList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="submitApiRequest" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>								
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="submitApiResponseList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="submitApiResponse" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>								
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="submitApiResultList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="submitApiResult" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>								
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="queueTimeOutList" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="queueTimeOut" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>								
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="extensionInfo" minOccurs="0">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="item" type="result:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>					
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="RequestSOAPHeaderMessage">
+		<wsdl:part name="RequestSOAPHeader" element="head_xsd:RequestSOAPHeader"/>
+	</wsdl:message>    	
+	<wsdl:message name="QueryTransaction_queryTranscationRequest">
+		<wsdl:part name="parameters" element="query_trans_local:queryTranscation"/>
+	</wsdl:message>
+	<wsdl:message name="QueryTransaction_queryTranscationResponse">
+		<wsdl:part name="result" element="query_trans_local:queryTranscationResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="QueryTransactionPort">
+		<wsdl:operation name="queryTransaction">
+			<wsdl:input message="query_trans:QueryTransaction_queryTranscationRequest"/>
+			<wsdl:output message="query_trans:QueryTransaction_queryTranscationResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="QueryTransactionBinding" type="query_trans:QueryTransactionPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="queryTransaction">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:header message="query_trans:RequestSOAPHeaderMessage" part="RequestSOAPHeader" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="QueryTransactionService">
+		<wsdl:port name="queryTransaction" binding="query_trans:QueryTransactionBinding">
+			<soap:address location="http://localhost:9080/queryTransactionService/services/transaction"/>
+		</wsdl:port>
+	</wsdl:service>	
+</wsdl:definitions>

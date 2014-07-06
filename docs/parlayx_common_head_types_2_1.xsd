@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- January 5, 2006 -->
+<xsd:schema xmlns:parlayx_common_head_xsd="http://www.huawei.com.cn/schema/common/v2_1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.huawei.com.cn/schema/common/v2_1" elementFormDefault="qualified">
+	<xsd:element name="RequestSOAPHeader" type="parlayx_common_head_xsd:RequestSOAPHeader"/>
+	<xsd:complexType name="RequestSOAPHeader">
+		<xsd:sequence>
+			<xsd:element name="spId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of third party.It's mandatory</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="spPassword" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>
+						Encrypted authentication password for partners to access the SAG.It must present if authentication type of 3rd party is SPID+Password or SPID+Password+IP.
+						The value is a character string encrypted from spId + Password + timeStamp by SHA-256. The encryption formula is as follows: spPassword = BASE64(SHA-256(spId + Password + timeStamp))
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>	
+			<xsd:element name="serviceId" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifier of service.It must present if 3rd party want to provide differentiated services</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="timeStamp" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Timestamp.It must present if authentication type of 3rd party is SPID+Password or SPID+Password+IP.Format is yyyyMMddHHmmss in UTC time.</xsd:documentation>
+				</xsd:annotation>				
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
